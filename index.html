@@ -7,26 +7,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Guess The Song!</h1>
-    <h2>Score: <span id="score">0</span> | Lives: <span id="lives">❤️❤️❤️</span></h2>
 
-    <!-- O leitor de áudio -->
-    <audio id="song"></audio>
-
-    <button onclick="playSong()" class="play-btn">▶️ Play Song</button>
-    
-    <hr>
-    
-    <h3 id="question-title">What song is this?</h3>
-    <div id="options">
-        <button onclick="checkAnswer(0)" id="btn0"></button>
-        <button onclick="checkAnswer(1)" id="btn1"></button>
-        <button onclick="checkAnswer(2)" id="btn2"></button>
-        <button onclick="checkAnswer(3)" id="btn3"></button>
+    <!-- ECRÃ DE LOGIN / NOME DO JOGADOR -->
+    <div id="login-screen" class="screen">
+        <h1>🎵 Guess The Song 🎵</h1>
+        <p>Login: </p></p>
+        <input type="text" id="username-input" placeholder="Your name..." maxlength="15">
+        <br><br>
+        <button onclick="startGame()" class="play-btn">Jogar</button>
     </div>
 
-    <p id="mensagem" class="msg"></p>
-    
+    <!-- ECRÃ DO JOGO (Inicialmente escondido) -->
+    <div id="game-screen" class="screen" style="display: none;">
+        <h1>Guess The Song!</h1>
+        <h2>Player: <span id="player-display"></span> | Score: <span id="score">0</span> | Lives: <span id="lives">❤️❤️❤️</span></h2>
+
+        <audio id="song"></audio>
+
+        <button onclick="playSong()" class="play-btn">▶️ Play Song</button>
+        
+        <hr>
+        
+        <h3 id="question-title">What song is this?</h3>
+        <div id="options">
+            <button onclick="checkAnswer(0)" id="btn0"></button>
+            <button onclick="checkAnswer(1)" id="btn1"></button>
+            <button onclick="checkAnswer(2)" id="btn2"></button>
+            <button onclick="checkAnswer(3)" id="btn3"></button>
+        </div>
+
+        <p id="mensagem" class="msg"></p>
+    </div>
+
+    <!-- ECRÃ DE FIM DE JOGO / TABELA DE MELHORES JOGADORES -->
+    <div id="scoreboard-screen" class="screen" style="display: none;">
+        <h2 id="final-msg">Fim do Jogo!</h2>
+        <p>Pontuação Final: <span id="final-score">0</span></p>
+        
+        <h3>🏆 Melhores Jogadores 🏆</h3>
+        <ol id="leaderboard-list">
+            <!-- A lista vai ser preenchida automaticamente por JavaScript -->
+        </ol>
+
+        <br>
+        <button onclick="location.reload()" class="play-btn">Jogar Novamente</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
