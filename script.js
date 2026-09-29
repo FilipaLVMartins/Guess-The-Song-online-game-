@@ -1,6 +1,6 @@
 // --- CONFIGURAÇÃO DO SUPABASE ---
 const SUPABASE_URL = "https://vbwqhhqvvebebfldpm.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_YYob81AWMgfYyBcVZMDtLA_dByqaD7V"; 
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZid3FoaHF2dnllYmVic2ZsZHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3MTEzOTYsImV4cCI6MjEwNjI4NzM5Nn0.iBgSTsBZYHdawgFsfMlpb_YNyEVOe-jFvlZkazRzak0"; 
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // -----------------------------------------------------------------------
