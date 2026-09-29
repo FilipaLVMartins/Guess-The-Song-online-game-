@@ -15,8 +15,8 @@ const levels = [
         correctIndex: 2
     },
     {
-        audioSrc: "loyaltykendriklamar.mp3", 
-        options: ["HUMBLE.", "DNA.", "LOYALTY.", "Not Like Us"],
+        audioSrc: "hotandcoldkatyperry.mp3", 
+        options: ["Roar", "Firework", "Hot n Cold", "Dark Horse"],
         correctIndex: 2
     },
     {
@@ -56,16 +56,19 @@ const levels = [
     }
 ];
 
-// Iniciar o jogo após o login
+function enterGame() {
+    document.getElementById("intro-screen").style.display = "none";
+    document.getElementById("login-screen").style.display = "block";
+}
+
 function startGame() {
     let inputVal = document.getElementById("username-input").value.trim();
     if (inputVal === "") {
-        alert("Por favor, insere um nome válido!");
+        alert("Please enter a valid name!");
         return;
     }
     username = inputVal;
     
-    // Esconder ecrã de login e mostrar o jogo
     document.getElementById("login-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
     document.getElementById("player-display").innerText = username;
@@ -74,7 +77,6 @@ function startGame() {
     loadLevel();
 }
 
-// Atualizar corações de vidas
 function updateLivesDisplay() {
     let hearts = "";
     for (let i = 0; i < lives; i++) {
@@ -93,11 +95,26 @@ function loadLevel() {
         document.getElementById("btn" + i).innerText = levelData.options[i];
     }
     document.getElementById("mensagem").innerText = "";
+    stopEqualizer();
 }
 
 function playSong() {
     let audio = document.getElementById("song");
-    audio.play();
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
+function startEqualizer() {
+    let eq = document.getElementById("equalizer");
+    if (eq) eq.classList.remove("paused");
+}
+
+function stopEqualizer() {
+    let eq = document.getElementById("equalizer");
+    if (eq) eq.classList.add("paused");
 }
 
 function checkAnswer(chosenIndex) {
@@ -110,22 +127,30 @@ function checkAnswer(chosenIndex) {
         score += 10;
         document.getElementById("score").innerText = score;
         
+        textoMensagem.innerText = "Awesome! Correct!";
+        textoMensagem.className = "msg certo";
+
+        // Confetis ampliados para ocupar uma maior área do ecrã
+        triggerLargeConfetti();
+
         currentLevel++;
 
         if (currentLevel < levels.length) {
-            textoMensagem.innerText = "Awesome! Next song loading...";
-            textoMensagem.className = "msg certo";
-            setTimeout(loadLevel, 1500);
+            setTimeout(nextLevelTransition, 1200);
         } else {
-            endGame("🎉 Parabéns! Completaste todas as rondas!");
+            setTimeout(() => endGame("🎉 Congratulations! You completed all rounds!"), 1200);
         }
     } else {
         lives--;
+        
+        // CORAÇÃO A CAIR EXATAMENTE DA ZONA DAS VIDAS
+        triggerHeartFromLives();
+
         updateLivesDisplay();
 
         if (lives <= 0) {
             audio.pause();
-            endGame("💥 Game Over! Acabaram-se os corações.");
+            setTimeout(() => endGame("💥 Game Over! You ran out of hearts."), 1000);
         } else {
             textoMensagem.innerText = "Wrong answer! Try again.";
             textoMensagem.className = "msg errado";
@@ -133,42 +158,89 @@ function checkAnswer(chosenIndex) {
     }
 }
 
-// Função para terminar o jogo e guardar pontuação
-function endGame(mensagemFinal) {
+function nextLevelTransition() {
+    let wrapper = document.getElementById("level-content-wrapper");
+    wrapper.classList.add("slide-out-left");
+
+    setTimeout(() => {
+        loadLevel();
+        wrapper.classList.remove("slide-out-left");
+        wrapper.classList.add("slide-in-right");
+
+        setTimeout(() => {
+            wrapper.classList.remove("slide-in-right");
+        }, 50);
+    }, 350);
+}
+
+// Confetis expandidos (maior quantidade, espalhados por todo o topo)
+function triggerLargeConfetti() {
+    confetti({
+        particleCount: 150,
+        spread: 120,
+        origin: { x: 0.5, y: 0 },
+        colors: ['#8b5cf6', '#c4b5fd', '#3b82f6', '#ffffff', '#a78bfa', '#ec4899']
+    });
+
+    // Lançamentos laterais para cobrir toda a área da página
+    setTimeout(() => {
+        confetti({ particleCount: 70, angle: 60, spread: 80, origin: { x: 0, y: 0.3 } });
+        confetti({ particleCount: 70, angle: 120, spread: 80, origin: { x: 1, y: 0.3 } });
+    }, 200);
+}
+
+// Faz o coração surgir exatamente no elemento das vidas e cair
+function triggerHeartFromLives() {
+    let livesElement = document.getElementById("lives");
+    let rect = livesElement.getBoundingClientRect();
+    
+    let container = document.getElementById("animation-container");
+    let heart = document.createElement("div");
+    heart.className = "falling-heart";
+    heart.innerHTML = "💔";
+    
+    // Posiciona exatamente no centro horizontal do elemento das vidas
+    let startX = rect.left + (rect.width / 2) - 10;
+    let startY = rect.top;
+
+    heart.style.left = startX + "px";
+    heart.style.top = startY + "px";
+    
+    container.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 1000);
+}
+
+function endGame(finalMessage) {
     let audio = document.getElementById("song");
     audio.pause();
 
     document.getElementById("game-screen").style.display = "none";
     document.getElementById("scoreboard-screen").style.display = "block";
     
-    document.getElementById("final-msg").innerText = mensagemFinal;
+    document.getElementById("final-msg").innerText = finalMessage;
     document.getElementById("final-score").innerText = score;
 
     saveScoreAndShowLeaderboard();
 }
 
-// Guardar pontuações no LocalStorage e exibir tabela
 function saveScoreAndShowLeaderboard() {
     let scores = JSON.parse(localStorage.getItem("guessTheSongScores")) || [];
     
-    // Adicionar o jogador atual
     scores.push({ name: username, score: score });
-    
-    // Ordenar da maior pontuação para a menor
     scores.sort((a, b) => b.score - a.score);
-    
-    // Manter apenas os top 5
     scores = scores.slice(0, 5);
     
     localStorage.setItem("guessTheSongScores", JSON.stringify(scores));
 
-    // Mostrar na tabela HTML
     let listElement = document.getElementById("leaderboard-list");
     listElement.innerHTML = "";
 
     scores.forEach((item) => {
         let li = document.createElement("li");
-        li.innerText = `${item.name} — ${item.score} pts`;
+        li.innerHTML = `<span>👤 ${item.name}</span> <span>⭐ ${item.score} pts</span>`;
         listElement.appendChild(li);
     });
 }
