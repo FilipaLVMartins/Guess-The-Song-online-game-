@@ -1,9 +1,8 @@
 // --- CONFIGURAÇÃO DO SUPABASE ---
 const SUPABASE_URL = "https://vbwqhhqvvebebfldpm.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_YYob81AWmGfYbyBcVZMDtLA_dByqa..."; // Coloca aqui a chave completa que copiaste do Supabase
+const SUPABASE_ANON_KEY = "sb_publishable_YYob81AWMgfYyBcVZMDtLA_dByqaD7V"; 
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 // -----------------------------------------------------------------------
 
 let username = "";
