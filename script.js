@@ -50,7 +50,7 @@ const allLevels = [
         correctIndex: 2
     },
     {
-        audioSrc: "hatethatimadeyoulovemarianagrande.mp3", 
+        audioSrc: "hatethatimadeyoulovemearianagrande.mp3", 
         options: ["Hate That I Remember You", "Hate That I Made You Love Me", "Into You", "Break Up with Your Girlfriend"],
         correctIndex: 1
     },
@@ -95,7 +95,7 @@ const allLevels = [
         correctIndex: 2
     },
     {
-        audioSrc: "theresnothingholdingmebackshawnmen...mp3", 
+        audioSrc: "theresnothingholdingmebackshawnmendes.mp3", 
         options: ["Stitches", "Senorita", "Treat You Better", "There's Nothing Holdin' Me Back"],
         correctIndex: 3
     },
