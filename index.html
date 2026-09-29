@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Biblioteca de Confetis -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -38,7 +40,7 @@
         <div class="top-play-container">
             <audio id="song" onplay="startEqualizer()" onpause="stopEqualizer()" onended="stopEqualizer()"></audio>
             <button onclick="playSong()" class="play-btn large-play-btn spotify-container">
-                <span>▶️ Play Song</span>
+                <span>🎵 Song Playing</span>
                 <div id="equalizer" class="equalizer paused">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -88,6 +90,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
