@@ -112,6 +112,31 @@ const allLevels = [
         audioSrc: "wildflowerbillie.mp3", 
         options: ["Wildflower", "Birds of a Feather", "Ocean Eyes", "Bad Guy"],
         correctIndex: 0
+    },
+    {
+        audioSrc: "honeybeeoliviarodrigo.mp3",
+        options: ["Honeybee", "vampire", "driver's license", "deja vu"],
+        correctIndex: 0
+    },
+    {
+        audioSrc: "latch.mp3",
+        options: ["Latch", "Omen", "Stay With Me", "White Noise"],
+        correctIndex: 0
+    },
+    {
+        audioSrc: "breakupwithyourgirlfriend.mp3",
+        options: ["7 rings", "thank u, next", "break up with your girlfriend, i'm bored", "positions"],
+        correctIndex: 2
+    },
+    {
+        audioSrc: "trustissuestheweeknd.mp3",
+        options: ["Starboy", "Trust Issues", "Blinding Lights", "The Hills"],
+        correctIndex: 1
+    },
+    {
+        audioSrc: "Jealou$y.mp3",
+        options: ["Jealou$y", "Sweater Weather", "Daddy Issues", "R.I.P. 2 My Youth"],
+        correctIndex: 0
     }
 ];
 
